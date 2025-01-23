@@ -1,18 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import { Code2, Database, Wrench, Palette, CheckCircle2 } from "lucide-react"
-import { PagesProps } from "@/interfaces/fixed"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
-import { Button } from "./ui/button"
+import { CheckCircle2 } from "lucide-react"
 import { TechDialog } from "./itens/TechDialog"
 import { skillCategories, SkillCategory } from "@/list/TechList"
   

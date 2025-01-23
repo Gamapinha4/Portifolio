@@ -1,4 +1,3 @@
-import { PagesProps } from "@/interfaces/fixed";
 import { motion } from "framer-motion";
 import { FaArrowDown } from "react-icons/fa";
 

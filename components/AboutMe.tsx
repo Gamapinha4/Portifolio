@@ -1,4 +1,3 @@
-import { PagesProps } from "@/interfaces/fixed";
 import Destacar from "./itens/Destacar";
 
 export default function Aboutme() {
