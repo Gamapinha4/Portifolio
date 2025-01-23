@@ -35,7 +35,7 @@ export default function FirstPage() {
       </a>
 
       <motion.div
-        className="absolute bottom-10 flex justify-center items-center"
+        className="absolute flex mt-96 justify-center items-center"
         animate={{ y: [0, 10, 0] }}
         transition={{
           repeat: Infinity,
