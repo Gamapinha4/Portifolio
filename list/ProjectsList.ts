@@ -1,8 +1,8 @@
 import { StaticImageData } from "next/image";
 import Go from '../image/GO.png';
-import Evo from '../image/EVO.png';
-import Birthdays from '../image/BIRTHDAYS.png';
-import BrainBurn from '../image/BRAINBURN.png';
+import Evo from '../image/Evo.png';
+import Birthdays from '../image/Birthdays.png';
+import BrainBurn from '../image/BrainBurn.png';
 
 export interface Project {
     title: string;
