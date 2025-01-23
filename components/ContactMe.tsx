@@ -76,7 +76,7 @@ export default function ContactForm() {
       <form onSubmit={onSubmit} className="max-w-xl w-full space-y-6">
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-medium text-[#92E880] mb-4">FALE COMIGO</h2>
-          <p className="text-gray-400 font-light">Preencha o formulário abaixo para entrar em contato.</p>
+          <p className="text-white font-light">Preencha o formulário abaixo para entrar em contato.</p>
         </div>
 
         <div>
