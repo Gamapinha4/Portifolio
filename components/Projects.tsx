@@ -19,6 +19,9 @@ export default function Projects() {
   const [projectsSelect, setProjectsSelect] = useState<Project>();
   const [dialog, setDialog] = useState(false);
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 640) {
@@ -31,13 +34,13 @@ export default function Projects() {
         setCardsPerPage(3);
       }
     };
-  
+
     handleResize();
     window.addEventListener("resize", handleResize);
-  
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
+
   const indexOfLastProject = currentPage * cardsPerPage;
   const indexOfFirstProject = indexOfLastProject - cardsPerPage;
   const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
@@ -57,12 +60,40 @@ export default function Projects() {
   };
 
   function handleSelectProject(project: Project) {
-    setProjectsSelect(project)
-    setDialog(true)
+    setProjectsSelect(project);
+    setDialog(true);
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const touchDistance = touchStart - touchEnd;
+
+    if (touchDistance > 50) {
+      handleNext();
+    } else if (touchDistance < -50) {
+      handlePrevious();
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   return (
-    <section className="w-full h-screen bg-background py-12 px-4 md:px-6 flex items-center justify-center">
+    <section
+      className="w-full h-screen bg-background py-12 px-4 md:px-6 flex items-center justify-center"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="max-w-7xl w-full">
         <div className="sm:mb-12 text-center">
           <motion.h2
@@ -80,6 +111,18 @@ export default function Projects() {
           >
             Confira alguns dos meus principais projetos e veja o que posso fazer.
           </motion.p>
+        </div>
+
+        <div className="md:hidden flex flex-row items-center mt-2 justify-between gap-2">
+          <div className="text-white text-sm flex items-center gap-2">
+            <ArrowRight className="w-4 h-4 animate-pulse" />
+            <p className="animate-pulse">Slide para ver mais</p>
+          </div>
+          <div className="text-white text-xs font-light">
+            <p>
+              {Math.min(indexOfLastProject, projects.length)} de {projects.length}
+            </p>
+          </div>
         </div>
 
         <div className="grid mt-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg-2:grid-cols-3 gap-6">
@@ -113,7 +156,12 @@ export default function Projects() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-2 mt-4">
-                  <Button disabled={project.githubUrl == undefined} variant="secondary" size="sm" asChild>
+                  <Button
+                    disabled={project.githubUrl == undefined}
+                    variant="secondary"
+                    size="sm"
+                    asChild
+                  >
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                       <Github className="w-4 h-4 mr-2" />
                       {project.githubUrl == undefined ? 'Repositorio Privado' : 'Code'}
@@ -124,37 +172,37 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
+        <div className="flex flex-col items-center justify-center mt-2 sm:mt-2 md:mt-8 lg:mt-8 gap-4">
+          <div className="hidden md:flex gap-4">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handlePrevious}
+              disabled={currentPage === 1}
+              className="sm:w-auto md:w-32 lg:w-40"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+              className="sm:w-auto md:w-32 lg:w-40"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+
+
+
 
         <ProjectDialog
           isOpen={dialog}
           onClose={() => setDialog(false)}
           project={projectsSelect}
         />
-
-        <div className="flex flex-row justify-center mt-4 sm:mt-2 md:mt-8 lg:mt-8 gap-4">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-            className="sm:w-auto md:w-32 lg:w-40"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-            className="sm:w-auto md:w-32 lg:w-40"
-          >
-            <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-
-        <div className="text-center mt-4 text-white hidden sm:visible">
-          Página {currentPage} de {totalPages}
-        </div>
       </div>
     </section>
   );
