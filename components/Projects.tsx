@@ -89,7 +89,7 @@ export default function Projects() {
 
   return (
     <section
-      className="w-full h-screen bg-background py-12 px-4 md:px-6 flex mt-16 sm:items-center sm:mt-0 justify-center"
+      className="w-full h-screen bg-background py-12 px-4 md:px-6 flex mt-24 sm:items-center sm:mt-0 justify-center"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}

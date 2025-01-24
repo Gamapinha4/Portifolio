@@ -18,7 +18,7 @@ export default function TechList() {
   const closeDialog = () => setIsOpen(false)
 
   return (
-    <section className="w-full min-h-screen bg-[#1C1C1C] py-12 px-4 md:px-6 flex justify-center items-center">
+    <section className="w-full min-h-screen bg-[#1C1C1C] py-12 px-4 md:px-6 flex justify-center mt-24 sm:items-center sm:mt-0">
       <div className="max-w-6xl w-full">
         <h2 className="text-[#92E880] text-4xl md:text-6xl text-center mb-2 font-normal">HABILIDADES</h2>
         <p className="text-white text-center text-sm font-light mb-8">Conheça as principais tecnologias e ferramentas que domino.</p>
