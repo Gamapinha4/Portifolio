@@ -68,19 +68,19 @@ export async function getPinnedRepos(username: string): Promise<RepoDetails[]> {
     });
 
     const pinnedRepos = repos
-      .filter((repo) => repo.topics.includes("pinned"))
+      .filter((repo) => repo.topics?.includes("pinned") ?? false)
       .map((repo) => ({
         id: repo.id,
         name: repo.name,
-        description: repo.description,
+        description: repo.description || "",
         html_url: repo.html_url,
         homepage: repo.homepage || "",
-        stargazers_count: repo.stargazers_count,
-        forks_count: repo.forks_count,
-        watchers_count: repo.watchers_count,
+        stargazers_count: repo.stargazers_count ?? 0,
+        forks_count: repo.forks_count ?? 0,
+        watchers_count: repo.watchers_count ?? 0,
         language: repo.language || "Unknown",
-        topics: repo.topics,
-        default_branch: repo.default_branch,
+        topics: repo.topics ?? [],
+        default_branch: repo.default_branch || "main",
       }));
 
     const repoDetails = await Promise.all(
@@ -94,9 +94,9 @@ export async function getPinnedRepos(username: string): Promise<RepoDetails[]> {
           repo,
           readme,
           contributors: contributors.map((contributor) => ({
-            login: contributor.login,
-            avatar_url: contributor.avatar_url,
-            html_url: contributor.html_url,
+            login: contributor.login ?? "",
+            avatar_url: contributor.avatar_url ?? "",
+            html_url: contributor.html_url ?? "",
           })),
         };
       })
